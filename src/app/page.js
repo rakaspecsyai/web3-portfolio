@@ -8,18 +8,15 @@ export default function Home() {
   const { address, isConnected } = useAccount()
   const { connectors, connect } = useConnect()
   const { disconnect } = useDisconnect()
+
   const USDC_SEPOLIA = '0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238'
 
-  // 1. Ambil data saldo berdasarkan alamat wallet yang terhubung
   const { data: balance, isLoading: isBalanceLoading } = useBalance({
     address: address,
-
-    //  konfigurasi React Query untuk menyegarkan data saldo
     query: {
-      staleTime: 10000, // Refresh setiap 10 detik
-      refetchOnWindowFocus: false, // Refresh saat jendela tidak aktif
-    },
-    
+      staleTime: 10000, // 10 detik
+      refetchOnWindowFocus: false,
+    }
   })
 
   const [mounted, setMounted] = useState(false)
@@ -30,76 +27,88 @@ export default function Home() {
 
   if (!mounted) {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-900 text-white">
-        <h1 className="text-4xl font-bold mb-8">Memuat DApp...</h1>
+      <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-white text-black">
+        <h1 className="text-xl font-bold mb-8 animate-pulse text-gray-400">Memuat Antarmuka...</h1>
       </main>
     )
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-900 text-white">
-      <h1 className="text-4xl font-bold mb-8">Web3 Portfolio Tracker</h1>
+    <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-white text-black font-sans">
+      <div className="w-full max-w-md">
+        {/* Header Estetik */}
+        <h1 className="text-4xl font-black mb-8 text-center tracking-tight">
+          Web3 <span className="text-orange-500">Portfolio</span>
+        </h1>
 
-      {isConnected ? (
-        // UI Dashboard Portfolio Kreatif & Profesional
-        <div className="flex flex-col items-center gap-6 bg-gray-800 p-6 rounded-xl shadow-2xl border border-gray-700 min-w-[350px]">
-          <div className="flex items-center gap-2 text-green-400 font-bold text-sm bg-green-500/10 px-3 py-1 rounded-full">
-            <span className="h-2 w-2 rounded-full bg-green-400 animate-pulse"></span>
-            Connected
-          </div>
-          
-          {/* Tampilan Alamat Wallet */}
-          <div className="w-full text-center">
-            <p className="text-gray-400 text-xs uppercase tracking-wider font-semibold">Wallet Address</p>
-            <p className="bg-gray-900 p-3 rounded-lg mt-1 font-mono text-xs break-all text-gray-300 select-all border border-gray-700">
-              {address}
-            </p>
-          </div>
-
-          {/* Tampilan Saldo Kripto Real-Time */}
-          <div className="w-full text-center border-t border-b border-gray-700 py-4">
-            <p className="text-gray-400 text-xs uppercase tracking-wider font-semibold">Balance</p>
-            {isBalanceLoading ? (
-              <p className="text-lg font-medium text-yellow-400 mt-1 animate-pulse">Menghubungi Blockchain...</p>
-            ) : (
-              <p className="text-3xl font-black text-blue-400 mt-1 tracking-tight">
-                {/* Menggunakan Ternary operator sebagai jaring  pengaman */}
-                {balance?.formatted ? Number(balance?.formatted).toFixed(4) : '0.0000'} 
-                <span className="text-xl text-white font-medium">
-                  {balance?.symbol || ' ETH'}
-                </span>
+        {isConnected ? (
+          // Desain Berbasis Card Utama
+          <div className="flex flex-col gap-6 bg-white p-7 rounded-2xl border border-gray-200 shadow-sm">
+            
+            {/* Status Terhubung (Aksen Oranye) */}
+            <div className="flex justify-between items-center">
+              <span className="text-xs font-bold uppercase tracking-widest text-gray-400">Status</span>
+              <div className="flex items-center gap-2 text-orange-600 font-bold text-xs bg-orange-50 px-3 py-1 rounded-full border border-orange-100">
+                <span className="h-2 w-2 rounded-full bg-orange-500 animate-pulse"></span>
+                Connected
+              </div>
+            </div>
+            
+            {/* Kartu Alamat Wallet */}
+            <div className="w-full">
+              <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Wallet Address</p>
+              <p className="bg-gray-50 p-3 rounded-xl font-mono text-xs break-all text-gray-600 select-all border border-gray-100">
+                {address}
               </p>
-            )}
-          </div>
+            </div>
 
-          {/* integrasi pembacaan Smart Contract Token */}
-          <div className="w-full text-left mb-4">
-            <p className="text-gray-400 text-xs uppercase tracking-wider font-semibold mb-2 border-b border-gray-700 pb-1">
-              Aset Token
-            </p>
-            <TokenBalance tokenAddress={USDC_SEPOLIA} userAddress={address} />
-          </div>
+            {/* Kartu Saldo Utama */}
+            <div className="w-full border-t border-b border-gray-100 py-6 my-2">
+              <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Total Balance</p>
+              {isBalanceLoading ? (
+                <p className="text-sm font-medium text-gray-400 mt-1 animate-pulse">Sinkronisasi Blockchain...</p>
+              ) : (
+                <p className="text-5xl font-black text-black tracking-tighter">
+                  {balance?.formatted ? Number(balance.formatted).toFixed(4) : '0.0000'} 
+                  <span className="text-xl text-orange-500 font-bold ml-2 uppercase">
+                    {balance?.symbol || 'ETH'}
+                  </span>
+                </p>
+              )}
+            </div>
 
-          <button
-            onClick={() => disconnect()}
-            className="w-full px-6 py-2.5 bg-red-600 hover:bg-red-700 rounded-lg font-bold transition-all text-sm shadow-lg shadow-red-900/20"
-          >
-            Disconnect Wallet
-          </button>
-        </div>
-      ) : (
-        <div className="flex flex-col gap-4">
-          {connectors.map((connector) => (
+            {/* Area Aset Token */}
+            <div className="w-full">
+              <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">
+                Aset Token Kontrak
+              </p>
+              <TokenBalance tokenAddress={USDC_SEPOLIA} userAddress={address} />
+            </div>
+
+            {/* Tombol Disconnect (Gaya Garis Tepi/Outline Minimalis) */}
             <button
-              key={connector.uid}
-              onClick={() => connect({ connector })}
-              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-bold transition-all shadow-lg shadow-blue-500/10 text-sm tracking-wide"
+              onClick={() => disconnect()}
+              className="w-full mt-2 px-6 py-3 bg-white border-2 border-black text-black hover:bg-black hover:text-white rounded-xl font-bold transition-all text-sm uppercase tracking-wide"
             >
-              Connect {connector.name}
+              Disconnect Wallet
             </button>
-          ))}
-        </div>
-      )}
+          </div>
+        ) : (
+          // Layar Login/Connect Berbasis Card
+          <div className="flex flex-col gap-5 bg-white p-8 rounded-2xl border border-gray-200 shadow-sm text-center">
+            <p className="text-gray-500 text-sm mb-2 font-medium">Otorisasi dompet Anda untuk mengakses portofolio aset terdesentralisasi.</p>
+            {connectors.map((connector) => (
+              <button
+                key={connector.uid}
+                onClick={() => connect({ connector })}
+                className="w-full px-6 py-3.5 bg-orange-500 hover:bg-orange-600 text-white rounded-xl font-bold transition-all shadow-lg shadow-orange-500/20 text-sm uppercase tracking-wider"
+              >
+                Connect {connector.name}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
     </main>
   )
 }
