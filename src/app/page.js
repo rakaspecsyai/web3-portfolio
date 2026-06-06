@@ -2,11 +2,13 @@
 
 import { useAccount, useConnect, useDisconnect, useBalance } from 'wagmi'
 import { useState, useEffect } from 'react'
+import { TokenBalance } from './TokenBalance'
 
 export default function Home() {
   const { address, isConnected } = useAccount()
   const { connectors, connect } = useConnect()
   const { disconnect } = useDisconnect()
+  const USDC_SEPOLIA = '0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238'
 
   // 1. Ambil data saldo berdasarkan alamat wallet yang terhubung
   const { data: balance, isLoading: isBalanceLoading } = useBalance({
@@ -68,6 +70,14 @@ export default function Home() {
                 </span>
               </p>
             )}
+          </div>
+
+          {/* integrasi pembacaan Smart Contract Token */}
+          <div className="w-full text-left mb-4">
+            <p className="text-gray-400 text-xs uppercase tracking-wider font-semibold mb-2 border-b border-gray-700 pb-1">
+              Aset Token
+            </p>
+            <TokenBalance tokenAddress={USDC_SEPOLIA} userAddress={address} />
           </div>
 
           <button
