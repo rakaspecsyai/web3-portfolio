@@ -34,3 +34,25 @@ export const erc20Abi = [
         "type": "function",
     }
 ]
+
+export const erc721Abi = [
+    {
+        "type": "function",
+        "name": "mint",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "type": "function",
+        "name": "totalSupply",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                 "type": "uint256"
+            }
+        ],
+        "stateMutability": "view"
+    }
+]

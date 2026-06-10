@@ -5,7 +5,7 @@ import { Providers } from './Providers'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Web3 Portfolio Tracker',
+  title: 'Web3 Portfolio',
   description: 'DApp buatan freelancer Web3 profesional.',
 }
 
