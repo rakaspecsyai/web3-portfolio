@@ -1,36 +1,24 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Web3 Portfolio & DeFi Dashboard 🚀
 
-## Getting Started
+A modern Web3 Decentralized Application (DApp) built with Next.js and Wagmi v2. This project bridges real-world business utility with blockchain infrastructure, featuring a portfolio tracker, DeFi execution capabilities, and an exclusive NFT Minting/Presale page [2].
+
+## 🌟 Key Features
+- **Seamless Wallet Integration:** Dynamic wallet connection supporting MetaMask, OKX Wallet, and other injected providers [3, 4].
+- **Real-Time DeFi Dashboard:** Live ETH and ERC-20 token balance tracking directly from the blockchain [5, 6].
+- **Smart Contract Execution:** Secure "Approve" functionality for DeFi token interactions [7, 8].
+- **RWA NFT Minting Page:** "Zac Washing VIP Pass" exclusive minting landing page with real-time total supply indicators to drive FOMO [2, 9].
+
+## 🛠 Tech Stack
+- **Frontend Framework:** Next.js (App Router) [10]
+- **Web3 Infrastructure:** Wagmi v2 & Viem [11]
+- **Styling:** Tailwind CSS (Minimalist, high-contrast UI) [12]
+- **Network Deployment:** Sepolia Testnet [13]
+
+## 🚀 Getting Started
 
 First, run the development server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open http://localhost:3000 with your browser to see the result.
